@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://camper-brandon.github.io/wonil-math/sitemap.xml
