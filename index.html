@@ -65,8 +65,12 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #faf9f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
     #__bundler_loading { position: fixed; bottom: 20px; right: 20px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; color: #666; background: #fff; padding: 8px 14px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); z-index: 10000; }
-    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #faf9f5; z-index: 9999; }
-    #__bundler_thumbnail svg { width: 100%; height: 100%; object-fit: contain; }
+    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #fbfaf8; z-index: 9999; }
+    #__bundler_thumbnail .splash { display: flex; flex-direction: column; align-items: center; gap: 16px; animation: splashPulse 1.6s ease-in-out infinite; }
+    #__bundler_thumbnail svg { width: 56px; height: 56px; }
+    #__bundler_thumbnail .brand { font: 800 19px/1 -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #15171c; letter-spacing: -0.02em; }
+    #__bundler_thumbnail .msg { font: 500 13px/1 -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; color: #9599a4; }
+    @keyframes splashPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
     #__bundler_placeholder { color: #999; font-size: 14px; }
   </style>
   <noscript>
@@ -77,14 +81,14 @@
   </noscript>
 </head>
 <body>
-  <div id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" sc-camel-view-box="0 0 100 100"><rect width="100" height="100" fill="#15171c"></rect><circle cx="50" cy="50" r="20" fill="none" stroke="#fbfaf8" stroke-width="4"></circle><line x1="40" y1="50" x2="60" y2="50" stroke="#e85d3d" stroke-width="4" stroke-linecap="round"></line></svg></div>
-  <div id="__bundler_loading">Unpacking...</div>
+  <div id="__bundler_thumbnail"><div class="splash"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><circle cx="15" cy="15" r="12.5" fill="none" stroke="#15171c" stroke-width="2.4"></circle><line x1="9.5" y1="15" x2="20.5" y2="15" stroke="#e85d3d" stroke-width="2.4" stroke-linecap="round"></line></svg><div class="brand">원일수학</div><div class="msg">홈페이지를 불러오는 중…</div></div></div>
+  <div id="__bundler_loading" style="display:none">불러오는 중…</div>
 
   <script>
     
 document.addEventListener('DOMContentLoaded', async function() {
   const loading = document.getElementById('__bundler_loading');
-  function setStatus(msg) { if (loading) loading.textContent = msg; }
+  function setStatus(msg) { if (loading) { loading.textContent = msg; if (/error/i.test(msg)) loading.style.display = 'block'; } }
 
   const FONT_MIME = /^(font[/]|application[/](x-)?font-|application[/]vnd\.ms-fontobject)/i;
   const MIME_TOKEN = /^[\w.+-]+[/][\w.+-]+$/;
